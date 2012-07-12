@@ -20,10 +20,11 @@ my $GIT_SHOW   = 'git show --stat';
 
 ###
 
-parse_opts();
 main();
 
 sub main {
+    parse_opts();
+
     unless ( qx( $GIT_STATUS ) ) {
         say( 'Not a git repository (or any of the parent directories)' );
 
