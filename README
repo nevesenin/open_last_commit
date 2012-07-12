@@ -1,0 +1,4 @@
+INSTALL
+
+git clone https://github.com/nevesenin/open_last_commit.git
+ln -s ~/open_last_commit/olc.pl ~/bin/olc
