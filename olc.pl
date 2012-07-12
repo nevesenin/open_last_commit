@@ -17,7 +17,7 @@ my $OPEN_WORKDIR   = 1;
 my $SHA            = '';
 
 my $GIT_STATUS = 'git status 2> /dev/null';
-my $GIT_SHOW   = 'git show --stat';
+my $GIT_SHOW   = 'git show --raw';
 
 ###
 
@@ -38,10 +38,11 @@ sub main {
     $git_show .= ' ' . $SHA if ( $SHA );
 
     my @gitstat = qx( $git_show );
+
     my @files   = ();
 
     foreach my $line ( @gitstat ) {
-        if ( $line =~ /^\s(\S+)\s+\|\s+\d+\s+[+-]+/ ) {
+        if ( $line =~ /^:\d{6}\s\d{6}\s[a-f0-9]{7}\.\.\.\s[a-f0-9]{7}\.\.\.\s(?:[ADMTUX]|(?:[CR]\d{1,3}\s\S+))\s(\S+)$/i ) {
             my $file = File::Spec->catfile( $working_dir, $1 );
             push( @files, $file );
         }
@@ -55,7 +56,7 @@ sub main {
     $command .= ' ' . $working_dir if ( $OPEN_WORKDIR );
     $command .= ' ' . join( ' ', @files );
 
-    system( $command );
+    exec( $command );
 }
 
 sub confirm_large_commits {
