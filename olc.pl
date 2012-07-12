@@ -14,6 +14,7 @@ use File::Spec;
 
 my $EDITOR_COMMAND = 'open -a "/Applications/Sublime Text 2.app/Contents/MacOS/Sublime Text 2"';
 my $OPEN_WORKDIR   = 1;
+my $SHA            = '';
 
 my $GIT_STATUS = 'git status 2> /dev/null';
 my $GIT_SHOW   = 'git show --stat';
@@ -33,7 +34,10 @@ sub main {
 
     my $working_dir = get_working_dir();
 
-    my @gitstat = qx( $GIT_SHOW );
+    my $git_show = $GIT_SHOW;
+    $git_show .= ' ' . $SHA if ( $SHA );
+
+    my @gitstat = qx( $git_show );
     my @files   = ();
 
     foreach my $line ( @gitstat ) {
@@ -68,9 +72,10 @@ sub confirm_large_commits {
 
 sub parse_opts {
     my %opts;
-    getopts( 'ne:', \%opts );
+    getopts( 'ne:s:', \%opts );
 
     $EDITOR_COMMAND = $opts{e} if ( $opts{e} );
+    $SHA            = $opts{s} if ( $opts{s} );
     $OPEN_WORKDIR   = 0        if ( $opts{n} );
 }
 
