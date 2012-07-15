@@ -2,3 +2,21 @@ INSTALL
 
 git clone https://github.com/nevesenin/open_last_commit.git
 ln -s ~/open_last_commit/olc.pl ~/bin/olc
+
+EXAMPLES
+
+olc
+
+	open last commited files and working directory with sublime text 2
+
+olc -n
+
+	open last commited files without working directory with sublime text 2
+
+ols -n -e 'vi'
+
+	open last commited files without working directory with vi
+
+olc -n -e 'vi' -s b00f831a88dd8c72ae12efae8f98652e23d5c2b3
+
+	open files from commit b00f831a88dd8c72ae12efae8f98652e23d5c2b3 without working directory with vi
