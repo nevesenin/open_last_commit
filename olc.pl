@@ -42,7 +42,7 @@ sub main {
     my @files   = ();
 
     foreach my $line ( @gitstat ) {
-        if ( $line =~ /^:\d{6}\s\d{6}\s[a-f0-9]{7}\.\.\.\s[a-f0-9]{7}\.\.\.\s(?:[ADMTUX]|(?:[CR]\d{1,3}\s\S+))\s(\S+)$/i ) {
+        if ( $line =~ /^:\d{6}\s\d{6}\s[a-f0-9]{7}\.\.\.\s[a-f0-9]{7}\.\.\.\s(?:[AMTUX]|(?:[CR]\d{1,3}\s\S+))\s(\S+)$/i ) {
             my $file = File::Spec->catfile( $working_dir, $1 );
             push( @files, $file );
         }
